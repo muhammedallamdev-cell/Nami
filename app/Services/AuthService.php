@@ -12,6 +12,18 @@ class AuthService
 {
     public function __construct(protected AuthAdminInterface $repo) {}
 
+    /**
+     * Login an admin user.
+     *
+     * @param array $data
+     * @return \Illuminate\Http\JsonResponse
+     */
+     /**
+     * Validate the admin credentials, and return an api token
+     * if the credentials are correct.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function login(array $data)
     {
         $admin = $this->repo->findByEmail($data['email']);
@@ -27,12 +39,20 @@ class AuthService
 
         $apiToken = $admin->createToken('admin-token')->plainTextToken;
 
-
         return [
             'admin' => $admin, 
             'token' => $apiToken, 
         ];
     }
+    
+    /**
+     * Set an admin token via a request.
+     *
+     * This method is used to set the admin token cookie.
+     *
+     * @param array $data
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function setToken(array $data)
     {
         $token = $data['token'] ?? null;
@@ -58,6 +78,15 @@ class AuthService
         return response()->json(['status' => true, 'message' => 'Token set'])->withCookie($cookie);
     }
 
+    /**
+     * Logout an admin user.
+     *
+     * This method will delete the personal access token for the
+     * currently authenticated admin user, and remove the admin token
+     * cookie.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function logout()
     {
         $admin = Auth::guard('admin')->user();

@@ -59,7 +59,6 @@
     <div class="content-section">
       <div id="tablesContainer">
 
-        {{-- default placeholders (will be replaced by AJAX response) --}}
         <div id="noData" class="no-data" style="display: none;">
           <i class="bi bi-inbox"></i>
           <h4>No Data Selected</h4>

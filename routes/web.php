@@ -28,7 +28,7 @@ Route::get('/auth/login', function () {
     return view('admin.auth.login');
  })->name('admin.auth.login.form');
 
- Route::get('/auth/logout', [AuthAdminController::class, 'logout'])->name('admin.auth.logout');
+Route::get('/auth/logout', [AuthAdminController::class, 'logout'])->name('admin.auth.logout');
 
 Route::post('/auth/set-token', [AuthAdminController::class, 'setToken'])->name('admin.auth.setToken');
 

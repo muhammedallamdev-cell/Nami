@@ -26,8 +26,8 @@ class AdminSanctumMiddleware
         $token = $bearer ?: $cookieToken;
 
         if (! $token) {
-            // لو كان AJAX أو طلب JSON ارجع 401، وإلا عدل إعادة التوجيه لصفحة تسجيل الدخول
-            if ($request->expectsJson() || $request->is('api/*')) {
+            
+            if ($request->expectsJson()) {
                 return response()->json(['message' => 'Unauthorized'], 401);
             }
             return redirect()->route('admin.auth.login.form');
@@ -36,7 +36,7 @@ class AdminSanctumMiddleware
         $pat = PersonalAccessToken::findToken($token);
 
         if (! $pat) {
-            if ($request->expectsJson() || $request->is('api/*')) {
+            if ($request->expectsJson()) {
                 return response()->json(['message' => 'Invalid token'], 401);
             }
             return redirect()->route('admin.auth.login.form');

@@ -9,7 +9,8 @@ use App\Http\Controllers\Controller;
 class TableController extends Controller
 {
 
-    public function __construct(protected TableService $service) {}
+    public function __construct(protected TableService $service) {
+    }
 
     public function fetch(Request $request)
     {
